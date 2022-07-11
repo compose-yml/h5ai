@@ -1,0 +1,22 @@
+---
+version: "3.8"
+
+services:
+  h5ai:
+    image: docker.io/awesometic/h5ai:latest
+    networks:
+      - proxy
+    environment:
+      - "TZ=Europe/Berlin"
+      - "HTPASSWD=true"
+      - "HTPASSWD_USER=${H5AI_HTPASSWD_USER}"
+      - "HTPASSWD_PW=${H5AI_HTPASSWD_PW}"
+    volumes:
+      - "./compose.d/h5ai/conf.d:/config:rw"
+      - "./compose.d/h5ai/data.d:/h5ai:ro"
+    restart: always
+    container_name: ${H5AI_CONTAINER_NAME}
+
+networks:
+  proxy:
+    external: true
